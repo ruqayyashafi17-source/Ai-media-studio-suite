@@ -5,6 +5,7 @@ function handleLeadSubmission(e) {
   var brandName = document.getElementById("brandName").value;
   var brandEmail = document.getElementById("brandEmail").value;
   var service = document.getElementById("selectedService").value;
+  var projectBrief = document.getElementById("projectBrief").value;
   var successAlert = document.getElementById("successAlert");
 
   if (!brandName || !brandEmail) {
@@ -12,19 +13,30 @@ function handleLeadSubmission(e) {
     return;
   }
 
+  // Active n8n Webhook Request
+  fetch('http://localhost:5678/webhook-test/media-lead', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      brandName: brandName,
+      brandEmail: brandEmail,
+      selectedService: service,
+      projectBrief: projectBrief
+    })
+  })
+  .then(response => {
+    console.log("Lead successfully sent to n8n workflow!");
+  })
+  .catch(error => {
+    console.error("Error sending lead:", error);
+  });
+
   // Show Success Alert
   if (successAlert) {
     successAlert.classList.remove("hidden");
   }
-
-  // Optional: If you connect n8n webhook URL later, you can add fetch() request here:
-  /*
-  fetch('YOUR_N8N_WEBHOOK_URL', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ brandName: brandName, brandEmail: brandEmail, service: service })
-  });
-  */
 
   // Reset Form
   document.getElementById("leadForm").reset();
