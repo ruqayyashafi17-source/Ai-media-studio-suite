@@ -1,4 +1,4 @@
-// Real Gemini AI Commercial Script Generator Integration
+// Real Gemini AI Script Generator via n8n Backend
 async function generateAIScript() {
   var brandInput = document.getElementById("scriptBrand");
   var audienceInput = document.getElementById("scriptAudience");
@@ -12,33 +12,28 @@ async function generateAIScript() {
     return;
   }
 
-  outputBox.innerText = "⚡ Connecting to Gemini AI Engine...\nGenerating live custom commercial script...";
-
-  // ⚠️ YAHAN APNI GEMINI API KEY APPLIY KAREIN
-  const GEMINI_API_KEY = ""; 
+  outputBox.innerText = "⚡ Connecting to Gemini AI Engine via Secure Backend...\nGenerating custom script...";
 
   try {
-    const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${GEMINI_API_KEY}`, {
+    // Calling n8n Cloud Webhook (Zero API keys in frontend)
+    const response = await fetch("http://localhost:5678/webhook-test/generate-script", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        contents: [{
-          parts: [{
-            text: `Write a high-impact, professional 30-second TV commercial script for a brand named "${brand}" targeting "${audience}". Include Scene directions, Audio cues, Voiceover script, and Call to Action.`
-          }]
-        }]
+        brandName: brand,
+        targetAudience: audience
       })
     });
 
     const data = await response.json();
-    if (data.candidates && data.candidates[0].content.parts[0].text) {
-      outputBox.innerText = data.candidates[0].content.parts[0].text;
+    if (data && data.script) {
+      outputBox.innerText = data.script;
     } else {
-      outputBox.innerText = "Error generating script. Please check API Key or try again.";
+      outputBox.innerText = "Error: Could not retrieve script from AI engine.";
     }
   } catch (error) {
     console.error("AI Script Error:", error);
-    outputBox.innerText = "Failed to connect to AI engine. Ensure network connectivity.";
+    outputBox.innerText = "Failed to connect to backend engine. Ensure n8n workflow is active.";
   }
 }
 
