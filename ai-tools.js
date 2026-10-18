@@ -15,7 +15,7 @@ async function generateAIScript() {
   outputBox.innerText = "⚡ Connecting to Gemini AI Engine via Secure Backend...\nGenerating custom script...";
 
   try {
-    // Calling n8n Cloud Webhook (Zero API keys in frontend)
+    // Calling n8n Backend Webhook
     const response = await fetch("http://localhost:5678/webhook-test/generate-script", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
