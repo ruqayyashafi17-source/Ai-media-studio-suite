@@ -1,55 +1,59 @@
-// Real Gemini AI Script Generator via n8n Backend
-async function generateAIScript() {
-  var brandInput = document.getElementById("scriptBrand");
-  var audienceInput = document.getElementById("scriptAudience");
-  var outputBox = document.getElementById("scriptOutput");
+document.addEventListener('DOMContentLoaded', () => {
+    const scriptForm = document.getElementById('script-generator-form');
+    const outputBox = document.getElementById('script-output');
+    const generateBtn = document.getElementById('generate-btn');
 
-  var brand = brandInput.value.trim();
-  var audience = audienceInput.value.trim();
+    if (scriptForm) {
+        scriptForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
 
-  if (!brand || !audience) {
-    alert("Please enter both Brand Name and Target Audience!");
-    return;
-  }
+            // 1. Form Inputs Gather Karein
+            const brandName = document.getElementById('brandName').value.trim();
+            const targetAudience = document.getElementById('targetAudience').value.trim();
 
-  outputBox.innerText = "⚡ Connecting to Gemini AI Engine via Secure Backend...\nGenerating custom script...";
+            if (!brandName || !targetAudience) {
+                alert('Please fill in all required fields.');
+                return;
+            }
 
-  try {
-    // Calling n8n Backend Webhook
-    const response = await fetch("http://localhost:5678/webhook-test/generate-script", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        brandName: brand,
-        targetAudience: audience
-      })
-    });
+            // 2. Loading State Show Karein
+            outputBox.value = "Generating commercial script via AI Engine... Please wait...";
+            if (generateBtn) generateBtn.disabled = true;
 
-    const data = await response.json();
-    if (data && data.script) {
-      outputBox.innerText = data.script;
-    } else {
-      outputBox.innerText = "Error: Could not retrieve script from AI engine.";
+            try {
+                // 3. Local n8n Test Webhook Call
+                const response = await fetch('http://localhost:5678/webhook-test/generate-script', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        brandName: brandName,
+                        targetAudience: targetAudience
+                    })
+                });
+
+                if (!response.ok) {
+                    throw new Error(`Server returned status ${response.status}`);
+                }
+
+                const data = await response.json();
+
+                // 4. Output Render Karein
+                if (data && data.script) {
+                    outputBox.value = data.script;
+                } else if (typeof data === 'string') {
+                    outputBox.value = data;
+                } else {
+                    outputBox.value = JSON.stringify(data, null, 2);
+                }
+
+            } catch (error) {
+                console.error("Script Generation Error:", error);
+                outputBox.value = `Error: Could not retrieve script from AI engine.\nDetails: ${error.message}\n\nTip: Ensure n8n is running locally and click 'Listen for Test Event' in n8n Webhook node.`;
+            } finally {
+                if (generateBtn) generateBtn.disabled = false;
+            }
+        });
     }
-  } catch (error) {
-    console.error("AI Script Error:", error);
-    outputBox.innerText = "Failed to connect to backend engine. Ensure n8n workflow is active.";
-  }
-}
-
-// Function to Calculate Commercial Rate Card Budget
-function calculateRate() {
-  var serviceSelect = document.getElementById("calcService");
-  var weeksInput = document.getElementById("calcWeeks");
-  var estimateDisplay = document.getElementById("totalEstimate");
-
-  if (!serviceSelect || !weeksInput || !estimateDisplay) return;
-
-  var baseRate = parseInt(serviceSelect.value) || 1500;
-  var weeks = parseInt(weeksInput.value) || 1;
-
-  if (weeks < 1) weeks = 1;
-
-  var total = baseRate * weeks;
-  estimateDisplay.innerText = "$" + total.toLocaleString();
-}
+});
