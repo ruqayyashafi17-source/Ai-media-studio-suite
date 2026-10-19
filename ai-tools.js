@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (generateBtn) generateBtn.disabled = true;
 
             try {
-                const response = await fetch('http://localhost:5678/webhook-test/generate-script', {
+                const response = await fetch('http://localhost:5678/webhook/generate-script', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
