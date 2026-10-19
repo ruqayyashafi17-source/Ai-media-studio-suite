@@ -7,7 +7,6 @@ document.addEventListener('DOMContentLoaded', () => {
         scriptForm.addEventListener('submit', async (e) => {
             e.preventDefault();
 
-            // 1. Form Inputs Gather Karein
             const brandName = document.getElementById('brandName').value.trim();
             const targetAudience = document.getElementById('targetAudience').value.trim();
 
@@ -16,12 +15,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 return;
             }
 
-            // 2. Loading State Show Karein
-            outputBox.value = "Generating commercial script via AI Engine... Please wait...";
+            outputBox.value = "Generating commercial script... Please wait...";
             if (generateBtn) generateBtn.disabled = true;
 
             try {
-                // 3. Local n8n Test Webhook Call
                 const response = await fetch('http://localhost:5678/webhook-test/generate-script', {
                     method: 'POST',
                     headers: {
@@ -34,12 +31,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
 
                 if (!response.ok) {
-                    throw new Error(`Server returned status ${response.status}`);
+                    throw new Error(`HTTP Error! Status: ${response.status}`);
                 }
 
                 const data = await response.json();
 
-                // 4. Output Render Karein
                 if (data && data.script) {
                     outputBox.value = data.script;
                 } else if (typeof data === 'string') {
@@ -49,8 +45,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
 
             } catch (error) {
-                console.error("Script Generation Error:", error);
-                outputBox.value = `Error: Could not retrieve script from AI engine.\nDetails: ${error.message}\n\nTip: Ensure n8n is running locally and click 'Listen for Test Event' in n8n Webhook node.`;
+                // Yeh line ab exact error screen par dikha degi
+                outputBox.value = "ASAL ERROR: " + error.message + "\n\n(Yeh error copy karke mujhe bata dein)";
             } finally {
                 if (generateBtn) generateBtn.disabled = false;
             }
