@@ -41,49 +41,119 @@
   </header>
 
   <!-- MAIN CONTENT -->
-  <main class="max-w-4xl mx-auto px-6 py-12 space-y-8 my-auto w-full">
+  <main class="max-w-6xl mx-auto px-6 py-12 space-y-12 my-auto w-full">
 
     <div class="border-b border-slate-800 pb-6 text-center">
       <span class="px-3 py-1 bg-blue-500/10 border border-blue-500/20 text-blue-400 rounded-full text-xs font-bold uppercase tracking-widest">
-        AI Commercial Copywriting
+        AI Commercial Tools & Rates
       </span>
-      <h2 class="text-3xl font-extrabold text-white tracking-tight mt-3">AI Commercial Script Generator</h2>
-      <p class="text-slate-400 text-xs mt-1">Generate high-converting ad scripts instantly using Gemini AI & n8n workflow.</p>
+      <h2 class="text-3xl font-extrabold text-white tracking-tight mt-3">AI Commercial Script Generator & Rate Card</h2>
+      <p class="text-slate-400 text-xs mt-1">Generate high-converting ad scripts instantly and check media rate packages.</p>
     </div>
 
-    <!-- SCRIPT FORM BOX -->
-    <div class="glass p-8 rounded-3xl border border-slate-800 space-y-6">
-      <form id="script-generator-form" class="space-y-5">
-        <div>
-          <label for="brandName" class="block text-xs font-semibold text-slate-300 mb-2">Brand / Business Name</label>
-          <input type="text" id="brandName" placeholder="e.g. Khadi Fabrics or Metro Fashion" required class="w-full bg-slate-900 border border-slate-700 rounded-xl p-3.5 text-sm focus:border-blue-500 outline-none text-white transition">
+    <!-- GRID SECTION: SCRIPT GENERATOR & AD RATES -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
+
+      <!-- 1. SCRIPT GENERATOR BOX -->
+      <div class="glass p-8 rounded-3xl border border-slate-800 space-y-6">
+        <div class="flex items-center space-x-3 border-b border-slate-800 pb-4">
+          <div class="p-3 bg-blue-500/10 text-blue-400 rounded-xl text-lg">
+            <i class="fa-solid fa-wand-magic-sparkles"></i>
+          </div>
+          <div>
+            <h3 class="text-xl font-bold text-white">AI Script Generator</h3>
+            <p class="text-xs text-slate-400">Gemini AI Copywriting Engine</p>
+          </div>
         </div>
 
-        <div>
-          <label for="targetAudience" class="block text-xs font-semibold text-slate-300 mb-2">Target Audience / Niche</label>
-          <input type="text" id="targetAudience" placeholder="e.g. Women fashion & winter clothing" required class="w-full bg-slate-900 border border-slate-700 rounded-xl p-3.5 text-sm focus:border-blue-500 outline-none text-white transition">
+        <form id="script-generator-form" class="space-y-4">
+          <div>
+            <label for="brandName" class="block text-xs font-semibold text-slate-300 mb-1">Brand Name</label>
+            <input type="text" id="brandName" placeholder="e.g. Khadi Fabrics" required class="w-full bg-slate-900 border border-slate-700 rounded-xl p-3 text-sm focus:border-blue-500 outline-none text-white">
+          </div>
+
+          <div>
+            <label for="targetAudience" class="block text-xs font-semibold text-slate-300 mb-1">Target Audience / Niche</label>
+            <input type="text" id="targetAudience" placeholder="e.g. Women fashion & winter wear" required class="w-full bg-slate-900 border border-slate-700 rounded-xl p-3 text-sm focus:border-blue-500 outline-none text-white">
+          </div>
+
+          <button type="submit" id="generate-btn" class="w-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-bold py-3.5 rounded-xl transition text-xs shadow-lg shadow-blue-600/30">
+            <i class="fa-solid fa-bolt mr-2"></i>Generate Commercial Script
+          </button>
+        </form>
+
+        <div class="space-y-2 pt-2">
+          <label for="script-output" class="block text-xs font-semibold text-slate-300">Generated Script Output:</label>
+          <textarea id="script-output" rows="7" placeholder="Script will appear here..." readonly class="w-full bg-slate-900 border border-slate-700 rounded-xl p-3.5 text-xs text-slate-200 outline-none font-mono resize-none"></textarea>
         </div>
-
-        <button type="submit" id="generate-btn" class="w-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-bold py-3.5 rounded-xl transition text-xs shadow-lg shadow-blue-600/30 flex justify-center items-center">
-          <i class="fa-solid fa-wand-magic-sparkles mr-2"></i>Generate Commercial Script
-        </button>
-      </form>
-
-      <!-- OUTPUT TEXTAREA -->
-      <div class="space-y-2 pt-4 border-t border-slate-800">
-        <label for="script-output" class="block text-xs font-semibold text-slate-300">Generated Script Output:</label>
-        <textarea id="script-output" rows="8" placeholder="Your generated commercial script will appear here..." readonly class="w-full bg-slate-900/90 border border-slate-700 rounded-xl p-4 text-sm text-slate-200 outline-none resize-y leading-relaxed font-mono"></textarea>
       </div>
+
+      <!-- 2. ADVERTISING RATES & PACKAGES TABLE -->
+      <div class="glass p-8 rounded-3xl border border-slate-800 space-y-6">
+        <div class="flex items-center space-x-3 border-b border-slate-800 pb-4">
+          <div class="p-3 bg-emerald-500/10 text-emerald-400 rounded-xl text-lg">
+            <i class="fa-solid fa-tags"></i>
+          </div>
+          <div>
+            <h3 class="text-xl font-bold text-white">Media Rate Card 2026</h3>
+            <p class="text-xs text-slate-400">Standard Advertising Rates & Packages</p>
+          </div>
+        </div>
+
+        <div class="space-y-4">
+          <!-- Package 1 -->
+          <div class="p-4 bg-slate-900/80 rounded-2xl border border-slate-800 flex justify-between items-center">
+            <div>
+              <h4 class="font-bold text-sm text-white">15-Second Commercial Slot</h4>
+              <p class="text-xs text-slate-400">Standard Placement / Digital Channels</p>
+            </div>
+            <span class="text-sm font-extrabold text-emerald-400 bg-emerald-500/10 px-3 py-1.5 rounded-xl border border-emerald-500/20">$1,500</span>
+          </div>
+
+          <!-- Package 2 -->
+          <div class="p-4 bg-slate-900/80 rounded-2xl border border-slate-800 flex justify-between items-center">
+            <div>
+              <h4 class="font-bold text-sm text-white">30-Second Prime Time Commercial</h4>
+              <p class="text-xs text-slate-400">High Engagement Peak Viewership</p>
+            </div>
+            <span class="text-sm font-extrabold text-emerald-400 bg-emerald-500/10 px-3 py-1.5 rounded-xl border border-emerald-500/20">$2,800</span>
+          </div>
+
+          <!-- Package 3 -->
+          <div class="p-4 bg-slate-900/80 rounded-2xl border border-slate-800 flex justify-between items-center">
+            <div>
+              <h4 class="font-bold text-sm text-white">Show Sponsorship & Product Placement</h4>
+              <p class="text-xs text-slate-400">In-Stream Branding & Logo Banners</p>
+            </div>
+            <span class="text-sm font-extrabold text-emerald-400 bg-emerald-500/10 px-3 py-1.5 rounded-xl border border-emerald-500/20">$4,500</span>
+          </div>
+
+          <!-- Package 4 -->
+          <div class="p-4 bg-slate-900/80 rounded-2xl border border-slate-800 flex justify-between items-center">
+            <div>
+              <h4 class="font-bold text-sm text-white">Full Production & Digital Campaign</h4>
+              <p class="text-xs text-slate-400">End-to-end Ad Design & Multi-Platform Ads</p>
+            </div>
+            <span class="text-sm font-extrabold text-emerald-400 bg-emerald-500/10 px-3 py-1.5 rounded-xl border border-emerald-500/20">$6,000</span>
+          </div>
+        </div>
+
+        <div class="pt-2 text-center">
+          <a href="contact.html" class="inline-block text-xs text-blue-400 hover:text-blue-300 font-semibold underline">
+            Book a Package via Advertiser Portal &rarr;
+          </a>
+        </div>
+      </div>
+
     </div>
 
   </main>
 
   <!-- FOOTER -->
-  <footer class="border-t border-slate-900 px-8 py-4 text-center text-xs text-slate-500">
-    AI Media Studio & Operations Suite &copy; 2026. Script Engine.
+  <footer class="border-t border-slate-900 px-8 py-4 text-center text-xs text-slate-500 mt-12">
+    AI Media Studio & Operations Suite &copy; 2026. Script Engine & Rate Card.
   </footer>
 
-  <!-- EXTERNAL SCRIPT -->
   <script src="ai-tools.js"></script>
 </body>
 </html>
